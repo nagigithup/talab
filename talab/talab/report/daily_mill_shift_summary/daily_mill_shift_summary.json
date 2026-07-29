@@ -1,0 +1,1 @@
+{"add_total_row":1,"doctype":"Report","is_standard":"Yes","module":"Talab","name":"Daily Mill Shift Summary","ref_doctype":"Talab Mill Shift","report_name":"Daily Mill Shift Summary","report_type":"Script Report","roles":[{"role":"Talab System Manager"},{"role":"Talab Manager"},{"role":"Cashier"},{"role":"Accounts Reviewer"}]}

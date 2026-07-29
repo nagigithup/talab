@@ -1,0 +1,51 @@
+[
+  {
+    "desk_access": 1,
+    "doctype": "Role",
+    "name": "Talab System Manager",
+    "role_name": "Talab System Manager",
+    "two_factor_auth": 0
+  },
+  {
+    "desk_access": 1,
+    "doctype": "Role",
+    "name": "Talab Manager",
+    "role_name": "Talab Manager",
+    "two_factor_auth": 0
+  },
+  {
+    "desk_access": 1,
+    "doctype": "Role",
+    "name": "Cashier",
+    "role_name": "Cashier",
+    "two_factor_auth": 0
+  },
+  {
+    "desk_access": 1,
+    "doctype": "Role",
+    "name": "Mill Operator",
+    "role_name": "Mill Operator",
+    "two_factor_auth": 0
+  },
+  {
+    "desk_access": 1,
+    "doctype": "Role",
+    "name": "Mercury Custodian",
+    "role_name": "Mercury Custodian",
+    "two_factor_auth": 0
+  },
+  {
+    "desk_access": 1,
+    "doctype": "Role",
+    "name": "Purchasing User",
+    "role_name": "Purchasing User",
+    "two_factor_auth": 0
+  },
+  {
+    "desk_access": 1,
+    "doctype": "Role",
+    "name": "Accounts Reviewer",
+    "role_name": "Accounts Reviewer",
+    "two_factor_auth": 0
+  }
+]

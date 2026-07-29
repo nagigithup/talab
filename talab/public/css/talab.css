@@ -1,0 +1,45 @@
+/*
+ * Foundation styles for future Talab Desk, web, and mobile surfaces.
+ * Components opt in with .talab-app, keeping all Frappe and ERPNext views intact.
+ */
+.talab-app {
+	direction: rtl;
+	font-family: "Noto Sans Arabic", "Tahoma", "Arial", sans-serif;
+	text-align: right;
+}
+
+.talab-app [dir="ltr"],
+.talab-app .talab-ltr {
+	direction: ltr;
+	text-align: left;
+}
+
+.talab-app .talab-toolbar,
+.talab-app .talab-actions {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	flex-wrap: wrap;
+}
+
+.talab-app .talab-touch-target {
+	min-height: 2.75rem;
+	min-width: 2.75rem;
+}
+
+.talab-app .talab-desktop-layout {
+	max-width: 90rem;
+	margin-inline: auto;
+}
+
+@media (max-width: 768px) {
+	.talab-app .talab-toolbar,
+	.talab-app .talab-actions {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.talab-app .talab-touch-target {
+		width: 100%;
+	}
+}

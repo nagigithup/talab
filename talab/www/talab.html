@@ -1,0 +1,10 @@
+{% extends "templates/web.html" %}
+{% block title %}طلب لخدمات التعدين{% endblock %}
+{% block head_include %}<link rel="manifest" href="/assets/talab/manifest.webmanifest"><meta name="theme-color" content="#087f5b"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="/assets/talab/icons/talab-180.png">{% endblock %}
+{% block page_content %}
+<main id="talab-portal" class="talab-portal" dir="rtl" data-user="{{ frappe.session.user }}">
+	<header class="tp-header"><div><h1>طلب لخدمات التعدين</h1><p>{{ user_full_name }} <span id="tp-date"></span></p></div><div><button id="tp-install" class="tp-install" hidden>تثبيت التطبيق</button><span id="tp-connection" role="status">جارٍ التحقق من الاتصال</span><a class="tp-logout" href="/api/method/logout?redirect-to=/talab">تسجيل الخروج</a></div></header>
+	<div id="tp-message" role="status"></div><section id="tp-view" aria-live="polite"></section>
+</main>
+{% endblock %}
+{% block script %}<script src="/assets/talab/js/mobile_portal.js"></script><script src="/assets/talab/js/talab-pwa.js"></script>{% endblock %}

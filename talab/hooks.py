@@ -5,6 +5,42 @@ app_description = "Talab Mining Operations System"
 app_email = "admin@example.com"
 app_license = "mit"
 
+required_apps = ["erpnext"]
+
+# Talab-owned global assets. Styles are deliberately scoped to Talab surfaces
+# so Arabic RTL support does not alter Frappe or ERPNext interfaces.
+app_include_css = "/assets/talab/css/talab.css"
+web_include_css = ["/assets/talab/css/talab.css", "/assets/talab/css/mobile_portal.css"]
+
+fixtures = [
+	{
+		"dt": "Role",
+		"filters": [
+			[
+				"role_name",
+				"in",
+				[
+					"Talab System Manager",
+					"Talab Manager",
+					"Cashier",
+					"Mill Operator",
+					"Mercury Custodian",
+					"Purchasing User",
+					"Accounts Reviewer",
+				],
+			]
+		],
+	}
+]
+
+permission_query_conditions = {
+	"Talab Mill Shift": "talab.permissions.get_mill_shift_permission_query_conditions",
+}
+
+has_permission = {
+	"Talab Mill Shift": "talab.permissions.has_mill_shift_permission",
+}
+
 # Apps
 # ------------------
 
@@ -255,4 +291,3 @@ app_license = "mit"
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
-
