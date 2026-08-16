@@ -5,3 +5,28 @@ Mill Operator,مشغل الطاحونة
 Mercury Custodian,أمين عهدة الزئبق
 Purchasing User,مستخدم المشتريات
 Accounts Reviewer,مراجع الحسابات
+Login is required.,يجب تسجيل الدخول أولاً.
+You do not have permission for this operation.,ليست لديك صلاحية لتنفيذ هذه العملية.
+You do not have permission to open shifts.,ليست لديك صلاحية لفتح الورديات.
+You do not have permission to search customers.,ليست لديك صلاحية للبحث عن العملاء.
+This mill is no longer available.,هذه الطاحونة لم تعد متاحة. حدّث الصفحة وحاول مجدداً.
+Another user opened this mill first. Refresh and try again.,قام مستخدم آخر بفتح هذه الطاحونة أولاً. حدّث الصفحة وحاول مجدداً.
+This shift is already closed.,هذه الوردية مغلقة بالفعل.
+Additional charges are disabled in Talab Settings.,الرسوم الإضافية غير مفعلة في إعدادات طلب.
+The selected customer is disabled.,العميل المحدد غير مفعل.
+Opening configuration values cannot be changed after the shift is created.,لا يمكن تغيير قيم إعدادات الفتح بعد إنشاء الوردية.
+Mercury issued must be greater than zero.,يجب أن تكون كمية الزئبق المصروفة أكبر من صفر.
+Returned mercury cannot be negative.,لا يمكن أن تكون كمية الزئبق المرتجعة سالبة.
+Returned mercury cannot exceed issued mercury.,لا يمكن أن تتجاوز كمية الزئبق المرتجعة الكمية المصروفة.
+Closing time cannot be before opening time.,لا يمكن أن يكون وقت الإغلاق قبل وقت الفتح.
+A closed shift requires closing time and returned mercury.,يتطلب إغلاق الوردية وقت الإغلاق وكمية الزئبق المرتجعة.
+"Amount paid must be between zero and total due.",يجب أن يكون المبلغ المدفوع بين صفر وإجمالي المستحق.
+Payment reference is mandatory for bank transfers.,مرجع التحويل مطلوب عند اختيار التحويل البنكي.
+Only a Mercury Custodian or Talab manager can close a shift.,يمكن لأمين عهدة الزئبق أو مدير طلب فقط إغلاق الوردية.
+A disabled or maintenance mill cannot open a shift.,لا يمكن فتح وردية لطاحونة متوقفة أو تحت الصيانة.
+This mill already has an open shift.,لهذه الطاحونة وردية مفتوحة بالفعل.
+Operation requests can only be created by the Talab portal.,لا يمكن إنشاء طلبات العمليات إلا من خلال بوابة طلب.
+Operation requests can only be changed by the Talab portal.,لا يمكن تغيير طلبات العمليات إلا من خلال بوابة طلب.
+A valid operation request ID is required.,معرّف صالح لطلب العملية مطلوب.
+This request ID belongs to a different operation.,معرّف الطلب هذا مرتبط بعملية مختلفة.
+This request ID belongs to a different operation target.,معرّف الطلب هذا مرتبط بهدف عملية مختلف.

@@ -1,0 +1,5 @@
+[
+  {"doctype":"Custom DocPerm","name":"talab-customer-system-manager","parent":"Customer","role":"Talab System Manager","permlevel":0,"select":1,"read":1},
+  {"doctype":"Custom DocPerm","name":"talab-customer-manager","parent":"Customer","role":"Talab Manager","permlevel":0,"select":1,"read":1},
+  {"doctype":"Custom DocPerm","name":"talab-customer-mill-operator","parent":"Customer","role":"Mill Operator","permlevel":0,"select":1,"read":1}
+]

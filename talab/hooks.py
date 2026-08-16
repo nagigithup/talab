@@ -30,15 +30,24 @@ fixtures = [
 				],
 			]
 		],
-	}
+	},
+	{
+		"dt": "Custom DocPerm",
+		"filters": [
+			["parent", "=", "Customer"],
+			["role", "in", ["Talab System Manager", "Talab Manager", "Mill Operator"]],
+		],
+	},
 ]
 
 permission_query_conditions = {
 	"Talab Mill Shift": "talab.permissions.get_mill_shift_permission_query_conditions",
+	"Talab Operation Request": "talab.permissions.get_operation_request_permission_query_conditions",
 }
 
 has_permission = {
 	"Talab Mill Shift": "talab.permissions.has_mill_shift_permission",
+	"Talab Operation Request": "talab.permissions.has_operation_request_permission",
 }
 
 # Apps

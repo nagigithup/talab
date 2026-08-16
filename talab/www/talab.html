@@ -1,10 +1,17 @@
 {% extends "templates/web.html" %}
 {% block title %}طلب لخدمات التعدين{% endblock %}
-{% block head_include %}<link rel="manifest" href="/assets/talab/manifest.webmanifest"><meta name="theme-color" content="#087f5b"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="/assets/talab/icons/talab-180.png">{% endblock %}
+{% block head_include %}<link rel="manifest" href="/assets/talab/manifest.webmanifest"><link rel="apple-touch-icon" sizes="180x180" href="/assets/talab/icons/talab-apple-180.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/talab/icons/talab-32.png"><meta name="theme-color" content="#087f5b"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">{% endblock %}
 {% block page_content %}
-<main id="talab-portal" class="talab-portal" dir="rtl" data-user="{{ frappe.session.user }}">
-	<header class="tp-header"><div><h1>طلب لخدمات التعدين</h1><p>{{ user_full_name }} <span id="tp-date"></span></p></div><div><button id="tp-install" class="tp-install" hidden>تثبيت التطبيق</button><span id="tp-connection" role="status">جارٍ التحقق من الاتصال</span><a class="tp-logout" href="/api/method/logout?redirect-to=/talab">تسجيل الخروج</a></div></header>
-	<div id="tp-message" role="status"></div><section id="tp-view" aria-live="polite"></section>
+<main id="talab-portal" class="talab-app talab-portal" dir="rtl" data-user="{{ frappe.session.user }}">
+	<header class="tp-header">
+		<div><h1>طلب لخدمات التعدين</h1><p><strong>{{ user_full_name }}</strong> · <span id="tp-date"></span></p></div>
+		<div class="tp-header-actions"><span id="tp-connection" role="status">جارٍ التحقق من الاتصال</span><button id="tp-install" type="button" hidden>تثبيت التطبيق</button><a id="tp-logout" class="tp-logout" href="/api/method/logout?redirect-to=/login">تسجيل الخروج</a></div>
+	</header>
+	<aside id="tp-ios-install" class="tp-pwa-notice" hidden><strong>تثبيت التطبيق على iPhone أو iPad</strong><ol><li>اضغط زر المشاركة.</li><li>اختر «إضافة إلى الشاشة الرئيسية».</li><li>اضغط «إضافة».</li></ol><button id="tp-ios-dismiss" type="button">إخفاء</button></aside>
+	<aside id="tp-update" class="tp-pwa-notice" hidden><span>يتوفر تحديث جديد للتطبيق</span><button id="tp-update-now" type="button">تحديث الآن</button></aside>
+	<nav class="tp-nav" aria-label="التنقل الرئيسي"><button data-action="home">الرئيسية</button><button data-action="shifts">الورديات المفتوحة</button><button data-action="summary">ملخص اليوم</button></nav>
+	<div id="tp-message" role="status" aria-live="polite"></div>
+	<section id="tp-view" aria-live="polite"><div class="tp-loading">جارٍ تحميل بيانات طلب…</div></section>
 </main>
 {% endblock %}
 {% block script %}<script src="/assets/talab/js/mobile_portal.js"></script><script src="/assets/talab/js/talab-pwa.js"></script>{% endblock %}

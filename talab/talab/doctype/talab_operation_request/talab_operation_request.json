@@ -1,0 +1,120 @@
+{
+ "actions": [],
+ "autoname": "field:request_id",
+ "creation": "2026-08-16 15:02:26.564926",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "request_id",
+  "requested_by",
+  "status",
+  "result_document",
+  "column_break_fptj",
+  "operation_type",
+  "target_reference",
+  "result_doctype"
+ ],
+ "fields": [
+  {
+   "fieldname": "request_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Request ID",
+   "read_only": 1,
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "operation_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Operation Type",
+   "options": "Open Shift\nClose Shift",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "target_reference",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Operation Target",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "requested_by",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Requested By",
+   "options": "User",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "default": "Processing",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Processing\nCompleted",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "result_doctype",
+   "fieldtype": "Link",
+   "label": "Result DocType",
+   "options": "DocType",
+   "read_only": 1
+  },
+  {
+   "fieldname": "result_document",
+   "fieldtype": "Dynamic Link",
+   "label": "Result Document",
+   "options": "result_doctype",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_fptj",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "links": [],
+ "modified": "2026-08-16 16:30:59.026779",
+ "modified_by": "Administrator",
+ "module": "Talab",
+ "name": "Talab Operation Request",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Talab System Manager",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Talab Manager",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Mill Operator",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Mercury Custodian",
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

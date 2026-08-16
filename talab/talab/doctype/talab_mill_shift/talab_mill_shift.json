@@ -1,1 +1,384 @@
-{"actions":[],"autoname":"naming_series:","doctype":"DocType","engine":"InnoDB","is_submittable":1,"field_order":["shift_information","naming_series","shift_date","mill","shift_number","customer","customer_name","customer_mobile","operator","opening_datetime","closing_datetime","shift_status","mercury_section","mercury_issued","mercury_returned","mercury_shortage","mercury_exemption","chargeable_mercury","mercury_price_per_gram","mercury_charge","amounts_section","shift_rental_amount","additional_charges","total_due","amount_paid","outstanding_amount","payment_status","payment_method","payment_reference","notes"],"fields":[{"fieldname":"shift_information","fieldtype":"Section Break","label":"بيانات الوردية"},{"fieldname":"naming_series","fieldtype":"Select","label":"سلسلة التسمية","options":"TMS-.YYYY.-.#####","default":"TMS-.YYYY.-.#####","hidden":1,"reqd":1},{"fieldname":"shift_date","fieldtype":"Date","label":"تاريخ الوردية","default":"Today","reqd":1,"in_list_view":1},{"fieldname":"mill","fieldtype":"Link","options":"Talab Mill","label":"الطاحونة","reqd":1,"in_list_view":1},{"fieldname":"shift_number","fieldtype":"Int","label":"رقم الوردية","read_only":1,"in_list_view":1},{"fieldname":"customer","fieldtype":"Link","options":"Customer","label":"العميل","reqd":1,"in_list_view":1},{"fieldname":"customer_name","fieldtype":"Data","label":"اسم العميل","fetch_from":"customer.customer_name","read_only":1},{"fieldname":"customer_mobile","fieldtype":"Data","label":"هاتف العميل"},{"fieldname":"operator","fieldtype":"Link","options":"User","label":"المشغل","default":"__user"},{"fieldname":"opening_datetime","fieldtype":"Datetime","label":"وقت الفتح","reqd":1,"default":"Now"},{"fieldname":"closing_datetime","fieldtype":"Datetime","label":"وقت الإغلاق","depends_on":"eval:doc.shift_status=='Closed' || doc.docstatus==1"},{"fieldname":"shift_status","fieldtype":"Select","label":"حالة الوردية","options":"Open\nClosed\nCancelled","default":"Open","read_only":1,"in_list_view":1},{"fieldname":"mercury_section","fieldtype":"Section Break","label":"الزئبق"},{"fieldname":"mercury_issued","fieldtype":"Float","label":"الزئبق المصروف (جرام)","reqd":1},{"fieldname":"mercury_returned","fieldtype":"Float","label":"الزئبق المرتجع (جرام)","depends_on":"eval:doc.shift_status=='Closed' || doc.docstatus==1"},{"fieldname":"mercury_shortage","fieldtype":"Float","label":"عجز الزئبق","read_only":1,"permlevel":1},{"fieldname":"mercury_exemption","fieldtype":"Float","label":"إعفاء الزئبق","read_only":1,"permlevel":1},{"fieldname":"chargeable_mercury","fieldtype":"Float","label":"الزئبق الخاضع للرسوم","read_only":1,"permlevel":1},{"fieldname":"mercury_price_per_gram","fieldtype":"Currency","label":"سعر جرام الزئبق","read_only":1,"permlevel":1},{"fieldname":"mercury_charge","fieldtype":"Currency","label":"رسوم الزئبق","read_only":1,"permlevel":1},{"fieldname":"amounts_section","fieldtype":"Section Break","label":"المبالغ"},{"fieldname":"shift_rental_amount","fieldtype":"Currency","label":"إيجار الوردية"},{"fieldname":"additional_charges","fieldtype":"Currency","label":"رسوم إضافية","default":"0"},{"fieldname":"total_due","fieldtype":"Currency","label":"إجمالي المستحق","read_only":1,"permlevel":1},{"fieldname":"amount_paid","fieldtype":"Currency","label":"المبلغ المدفوع","default":"0","allow_on_submit":1},{"fieldname":"outstanding_amount","fieldtype":"Currency","label":"المبلغ المتبقي","read_only":1,"permlevel":1},{"fieldname":"payment_status","fieldtype":"Select","label":"حالة الدفع","options":"Unpaid\nPartially Paid\nPaid","read_only":1,"permlevel":1,"in_list_view":1},{"fieldname":"payment_method","fieldtype":"Select","label":"طريقة الدفع","options":"Cash\nBank Transfer","allow_on_submit":1},{"fieldname":"payment_reference","fieldtype":"Data","label":"مرجع الدفع","allow_on_submit":1},{"fieldname":"notes","fieldtype":"Small Text","label":"ملاحظات","allow_on_submit":1}],"module":"Talab","name":"Talab Mill Shift","naming_rule":"By \"Naming Series\" field","permissions":[{"role":"Talab System Manager","read":1,"write":1,"create":1,"delete":1,"submit":1,"cancel":1,"print":1,"report":1,"export":1},{"role":"Talab Manager","read":1,"write":1,"create":1,"submit":1,"cancel":1,"print":1,"report":1,"export":1},{"role":"Mill Operator","read":1,"write":1,"create":1,"print":1},{"role":"Mercury Custodian","read":1,"write":1,"submit":1,"print":1},{"role":"Cashier","read":1,"write":1,"print":1},{"role":"Accounts Reviewer","read":1,"print":1,"report":1,"export":1},{"role":"Talab System Manager","permlevel":1,"read":1},{"role":"Talab Manager","permlevel":1,"read":1},{"role":"Mill Operator","permlevel":1,"read":1},{"role":"Mercury Custodian","permlevel":1,"read":1},{"role":"Cashier","permlevel":1,"read":1},{"role":"Accounts Reviewer","permlevel":1,"read":1}],"title_field":"customer_name","track_changes":1}
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2026-08-16 14:58:52.427662",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "shift_information",
+  "naming_series",
+  "mill",
+  "customer",
+  "column_break_xias",
+  "shift_date",
+  "customer_name",
+  "opening_datetime",
+  "shift_status",
+  "column_break_oeas",
+  "shift_number",
+  "customer_mobile",
+  "closing_datetime",
+  "operator",
+  "mercury_section",
+  "mercury_issued",
+  "mercury_exemption",
+  "mercury_charge",
+  "column_break_zebo",
+  "mercury_returned",
+  "chargeable_mercury",
+  "column_break_rlti",
+  "mercury_shortage",
+  "mercury_price_per_gram",
+  "amounts_section",
+  "shift_rental_amount",
+  "amount_paid",
+  "payment_method",
+  "notes",
+  "amended_from",
+  "column_break_aula",
+  "additional_charges",
+  "outstanding_amount",
+  "payment_reference",
+  "column_break_kkor",
+  "total_due",
+  "payment_status"
+ ],
+ "fields": [
+  {
+   "fieldname": "shift_information",
+   "fieldtype": "Section Break",
+   "label": "\u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0648\u0631\u062f\u064a\u0629"
+  },
+  {
+   "default": "TMS-.YYYY.-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "\u0633\u0644\u0633\u0644\u0629 \u0627\u0644\u062a\u0633\u0645\u064a\u0629",
+   "options": "TMS-.YYYY.-.#####",
+   "reqd": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "shift_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "\u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0648\u0631\u062f\u064a\u0629",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mill",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "\u0627\u0644\u0637\u0627\u062d\u0648\u0646\u0629",
+   "options": "Talab Mill",
+   "reqd": 1
+  },
+  {
+   "fieldname": "shift_number",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "\u0631\u0642\u0645 \u0627\u0644\u0648\u0631\u062f\u064a\u0629",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "\u0627\u0644\u0639\u0645\u064a\u0644",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "customer.customer_name",
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "label": "\u0627\u0633\u0645 \u0627\u0644\u0639\u0645\u064a\u0644",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer_mobile",
+   "fieldtype": "Data",
+   "label": "\u0647\u0627\u062a\u0641 \u0627\u0644\u0639\u0645\u064a\u0644"
+  },
+  {
+   "default": "__user",
+   "fieldname": "operator",
+   "fieldtype": "Link",
+   "label": "\u0627\u0644\u0645\u0634\u063a\u0644",
+   "options": "User"
+  },
+  {
+   "default": "Now",
+   "fieldname": "opening_datetime",
+   "fieldtype": "Datetime",
+   "label": "\u0648\u0642\u062a \u0627\u0644\u0641\u062a\u062d",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.shift_status=='Closed' || doc.docstatus==1",
+   "fieldname": "closing_datetime",
+   "fieldtype": "Datetime",
+   "label": "\u0648\u0642\u062a \u0627\u0644\u0625\u063a\u0644\u0627\u0642"
+  },
+  {
+   "default": "Open",
+   "fieldname": "shift_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "\u062d\u0627\u0644\u0629 \u0627\u0644\u0648\u0631\u062f\u064a\u0629",
+   "options": "Open\nClosed\nCancelled",
+   "read_only": 1
+  },
+  {
+   "fieldname": "mercury_section",
+   "fieldtype": "Section Break",
+   "label": "\u0627\u0644\u0632\u0626\u0628\u0642"
+  },
+  {
+   "fieldname": "mercury_issued",
+   "fieldtype": "Float",
+   "label": "\u0627\u0644\u0632\u0626\u0628\u0642 \u0627\u0644\u0645\u0635\u0631\u0648\u0641 (\u062c\u0631\u0627\u0645)",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.shift_status=='Closed' || doc.docstatus==1",
+   "fieldname": "mercury_returned",
+   "fieldtype": "Float",
+   "label": "\u0627\u0644\u0632\u0626\u0628\u0642 \u0627\u0644\u0645\u0631\u062a\u062c\u0639 (\u062c\u0631\u0627\u0645)"
+  },
+  {
+   "fieldname": "mercury_shortage",
+   "fieldtype": "Float",
+   "label": "\u0639\u062c\u0632 \u0627\u0644\u0632\u0626\u0628\u0642",
+   "permlevel": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "mercury_exemption",
+   "fieldtype": "Float",
+   "label": "\u0625\u0639\u0641\u0627\u0621 \u0627\u0644\u0632\u0626\u0628\u0642",
+   "permlevel": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "chargeable_mercury",
+   "fieldtype": "Float",
+   "label": "\u0627\u0644\u0632\u0626\u0628\u0642 \u0627\u0644\u062e\u0627\u0636\u0639 \u0644\u0644\u0631\u0633\u0648\u0645",
+   "permlevel": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "mercury_price_per_gram",
+   "fieldtype": "Currency",
+   "label": "\u0633\u0639\u0631 \u062c\u0631\u0627\u0645 \u0627\u0644\u0632\u0626\u0628\u0642",
+   "permlevel": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "mercury_charge",
+   "fieldtype": "Currency",
+   "label": "\u0631\u0633\u0648\u0645 \u0627\u0644\u0632\u0626\u0628\u0642",
+   "permlevel": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "amounts_section",
+   "fieldtype": "Section Break",
+   "label": "\u0627\u0644\u0645\u0628\u0627\u0644\u063a"
+  },
+  {
+   "fieldname": "shift_rental_amount",
+   "fieldtype": "Currency",
+   "label": "\u0625\u064a\u062c\u0627\u0631 \u0627\u0644\u0648\u0631\u062f\u064a\u0629"
+  },
+  {
+   "default": "0",
+   "fieldname": "additional_charges",
+   "fieldtype": "Currency",
+   "label": "\u0631\u0633\u0648\u0645 \u0625\u0636\u0627\u0641\u064a\u0629"
+  },
+  {
+   "fieldname": "total_due",
+   "fieldtype": "Currency",
+   "label": "\u0625\u062c\u0645\u0627\u0644\u064a \u0627\u0644\u0645\u0633\u062a\u062d\u0642",
+   "permlevel": 1,
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "amount_paid",
+   "fieldtype": "Currency",
+   "label": "\u0627\u0644\u0645\u0628\u0644\u063a \u0627\u0644\u0645\u062f\u0641\u0648\u0639"
+  },
+  {
+   "fieldname": "outstanding_amount",
+   "fieldtype": "Currency",
+   "label": "\u0627\u0644\u0645\u0628\u0644\u063a \u0627\u0644\u0645\u062a\u0628\u0642\u064a",
+   "permlevel": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "\u062d\u0627\u0644\u0629 \u0627\u0644\u062f\u0641\u0639",
+   "options": "Unpaid\nPartially Paid\nPaid",
+   "permlevel": 1,
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "payment_method",
+   "fieldtype": "Select",
+   "label": "\u0637\u0631\u064a\u0642\u0629 \u0627\u0644\u062f\u0641\u0639",
+   "options": "Cash\nBank Transfer"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "payment_reference",
+   "fieldtype": "Data",
+   "label": "\u0645\u0631\u062c\u0639 \u0627\u0644\u062f\u0641\u0639"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "\u0645\u0644\u0627\u062d\u0638\u0627\u062a"
+  },
+  {
+   "fieldname": "column_break_xias",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_oeas",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_zebo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_rlti",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Talab Mill Shift",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_aula",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_kkor",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-08-16 16:28:28.596005",
+ "modified_by": "Administrator",
+ "module": "Talab",
+ "name": "Talab Mill Shift",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Talab System Manager",
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Talab Manager",
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Mill Operator",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "role": "Mercury Custodian",
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "role": "Cashier",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Reviewer"
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Talab System Manager",
+   "write": 1
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Talab Manager",
+   "write": 1
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Mill Operator",
+   "write": 1
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Mercury Custodian"
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Cashier"
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Accounts Reviewer"
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "customer_name",
+ "track_changes": 1
+}

@@ -1,9 +1,44 @@
 (() => {
-	const status = document.querySelector("#tp-connection"), install = document.querySelector("#tp-install");
-	let installPrompt, checking = false;
-	const set = (text, offline = false) => { if (!status) return; status.textContent = text; status.classList.toggle("tp-connection-offline", offline); document.querySelectorAll('[data-action="submit-open"],[data-action="submit-close"]').forEach(button => button.disabled = offline); };
-	async function check() { if (checking) return; checking = true; if (!navigator.onLine) { set("غير متصل", true); checking = false; return; } const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), 5000); try { const response = await fetch("/api/method/ping", {cache:"no-store", credentials:"same-origin", signal:controller.signal}); set(response.ok ? "متصل" : "تعذر الوصول إلى الخادم", !response.ok); } catch { set("تعذر الوصول إلى الخادم", true); } finally { clearTimeout(timer); checking = false; } }
-	window.addEventListener("online", () => { set("جارٍ إعادة الاتصال"); check(); }); window.addEventListener("offline", () => set("غير متصل", true)); setInterval(check, 60000); check();
-	if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("/assets/talab/talab-sw.js", {scope:"/talab"}).catch(() => {}));
-	window.addEventListener("beforeinstallprompt", event => { event.preventDefault(); installPrompt = event; if (install) install.hidden = false; }); install?.addEventListener("click", async () => { if (!installPrompt) return; await installPrompt.prompt(); installPrompt = null; install.hidden = true; });
+	const root = document.querySelector("#talab-portal");
+	if (!root) return;
+	const installButton = document.querySelector("#tp-install");
+	const iosHelp = document.querySelector("#tp-ios-install");
+	const updateBox = document.querySelector("#tp-update");
+	let installPrompt = null;
+	let refreshing = false;
+	const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+	const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+	addEventListener("beforeinstallprompt", (event) => {
+		event.preventDefault(); installPrompt = event;
+		if (!standalone && sessionStorage.getItem("talab.install.dismissed") !== "1") installButton.hidden = false;
+	});
+	installButton?.addEventListener("click", async () => {
+		if (!installPrompt) return;
+		installButton.hidden = true; installPrompt.prompt();
+		const choice = await installPrompt.userChoice;
+		if (choice.outcome !== "accepted") sessionStorage.setItem("talab.install.dismissed", "1");
+		installPrompt = null;
+	});
+	if (ios && !standalone && sessionStorage.getItem("talab.ios.dismissed") !== "1") iosHelp.hidden = false;
+	document.querySelector("#tp-ios-dismiss")?.addEventListener("click", () => { iosHelp.hidden = true; sessionStorage.setItem("talab.ios.dismissed", "1"); });
+	addEventListener("appinstalled", () => { installButton.hidden = true; iosHelp.hidden = true; });
+
+	if (!("serviceWorker" in navigator)) return;
+	navigator.serviceWorker.register("/talab-sw.js", {scope: "/talab"}).then((registration) => {
+		const showUpdate = (worker) => {
+			if (!navigator.serviceWorker.controller) return;
+			updateBox.hidden = false;
+			document.querySelector("#tp-update-now").onclick = () => {
+				if (root.dataset.transactionBusy === "1") return;
+				if (root.querySelector("form") && !confirm("توجد بيانات غير مرسلة. هل تريد التحديث الآن؟")) return;
+				worker.postMessage({type: "SKIP_WAITING"});
+			};
+		};
+		if (registration.waiting) showUpdate(registration.waiting);
+		registration.addEventListener("updatefound", () => registration.installing?.addEventListener("statechange", () => {
+			if (registration.installing?.state === "installed") showUpdate(registration.installing);
+		}));
+	}).catch(() => {});
+	navigator.serviceWorker.addEventListener("controllerchange", () => { if (!refreshing) { refreshing = true; location.reload(); } });
 })();

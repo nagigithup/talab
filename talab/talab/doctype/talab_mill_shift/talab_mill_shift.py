@@ -6,6 +6,7 @@ from frappe.model.document import Document
 from frappe.utils import cint, flt, get_datetime, now_datetime, today
 
 CALCULATED_FIELDS = ("mercury_shortage", "chargeable_mercury", "mercury_charge", "total_due", "outstanding_amount", "payment_status")
+OPENING_DEFAULT_FIELDS = {"mercury_issued", "mercury_exemption", "mercury_price_per_gram", "shift_rental_amount"}
 PAYMENT_FIELDS = {"amount_paid", "payment_method", "payment_reference", "notes"}
 MANAGER_ROLES = {"Talab System Manager", "Talab Manager"}
 
@@ -50,10 +51,10 @@ class TalabMillShift(Document):
 		return frappe.db.get_single_value("Talab Settings", fieldname) or fallback
 
 	def _copy_opening_defaults(self):
-		self.shift_rental_amount = self.shift_rental_amount or self._settings_value("default_shift_rental_amount", 40)
-		self.mercury_issued = self.mercury_issued or self._settings_value("default_mercury_issue_qty", 200)
-		self.mercury_exemption = self.mercury_exemption or self._settings_value("default_mercury_exemption_qty", 10)
-		self.mercury_price_per_gram = self.mercury_price_per_gram or self._settings_value("mercury_price_per_gram", 0)
+		self.shift_rental_amount = self._settings_value("default_shift_rental_amount", 40)
+		self.mercury_issued = self._settings_value("default_mercury_issue_qty", 200)
+		self.mercury_exemption = self._settings_value("default_mercury_exemption_qty", 10)
+		self.mercury_price_per_gram = self._settings_value("mercury_price_per_gram", 0)
 
 	def _lock_mill_and_assign_shift_number(self):
 		frappe.db.sql("SELECT name FROM `tabTalab Mill` WHERE name=%s FOR UPDATE", self.mill)
@@ -69,6 +70,8 @@ class TalabMillShift(Document):
 		mill = frappe.get_doc("Talab Mill", self.mill)
 		if not mill.enabled or mill.current_status in ("Disabled", "Maintenance"):
 			frappe.throw(_("A disabled or maintenance mill cannot open a shift."))
+		if self.is_new() and mill.current_status != "Available":
+			frappe.throw(_("This mill is no longer available."))
 		if mill.current_open_shift and mill.current_open_shift != self.name:
 			frappe.throw(_("This mill already has an open shift."))
 
@@ -90,7 +93,7 @@ class TalabMillShift(Document):
 
 	def _calculate_values(self):
 		issued, returned, exemption = (Decimal(str(flt(value))) for value in (self.mercury_issued, self.mercury_returned, self.mercury_exemption))
-		shortage = max(issued - returned, Decimal("0"))
+		shortage = max(issued - returned, Decimal("0")) if self.mercury_returned not in (None, "") else Decimal("0")
 		chargeable = max(shortage - exemption, Decimal("0"))
 		charge = chargeable * Decimal(str(flt(self.mercury_price_per_gram)))
 		total = Decimal(str(flt(self.shift_rental_amount))) + charge + Decimal(str(flt(self.additional_charges)))
@@ -101,6 +104,8 @@ class TalabMillShift(Document):
 
 	def _enforce_role_boundaries(self):
 		old = self.get_doc_before_save()
+		if old and any(self.get(field) != old.get(field) for field in OPENING_DEFAULT_FIELDS):
+			frappe.throw(_("Opening configuration values cannot be changed after the shift is created."))
 		if old and old.docstatus == 1:
 			changed = {field for field in self.as_dict() if self.get(field) != old.get(field)}
 			if changed - PAYMENT_FIELDS - set(CALCULATED_FIELDS) - {"modified", "modified_by"}:
